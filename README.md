@@ -10,3 +10,5 @@
 3. nodemon
 4. mongoose
 5. cors
+6. dotenv
+7. express
