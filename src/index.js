@@ -1,8 +1,10 @@
+const dotenv = require("dotenv")
 const express = require("express")
-const app = express();
 const userRouter = require("./routes/userRoutes");
 const noteRouter = require("./routes/noteRoutes");
 const mongoose = require("mongoose");
+const app = express();
+dotenv.config()
 
 
 app.use(express.json());
@@ -14,9 +16,12 @@ app.use((req, res, next) => {
 app.use("/users", userRouter)
 app.use("/note", noteRouter)
 
-mongoose.connect("mongodb+srv://admin:admin123@cluster0.pthqibe.mongodb.net/jwt?retryWrites=true&w=majority&appName=Cluster0")
+const PORT = process.env.PORT
+const MONGOURL = process.env.MONGO_URL
+
+mongoose.connect(MONGOURL)
     .then(() => {
-        app.listen(5000, () => {
+        app.listen(PORT, () => {
             console.log("Server started on port no: 5000")
         })
 
