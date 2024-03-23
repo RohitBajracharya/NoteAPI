@@ -8,36 +8,68 @@ dotenv.config()
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const doesUserExist = async (email) => {
-    const user = await userModel.findOne({ email });
+    try {
+        const user = await userModel.findOne({ email });
+
+    } catch (error) {
+        console.log("Error: " + error);
+        throw error;
+    }
     if (user) return true
     return false
 }
 
 const findExistingUserByEmail = async (email) => {
-    return await userModel.findOne({ email });
+    try {
+        return await userModel.findOne({ email });
+    } catch (error) {
+        console.log("Error : " + error)
+        throw error;
+    }
 }
 
 const getHashedPassword = async (password) => {
-    return await bcrypt.hash(password, 10)
+    try {
+        return await bcrypt.hash(password, 10)
+    } catch (error) {
+        console.log("Error : " + error)
+        throw error;
+    }
 
 }
 
 const createNewUser = async (email, hashedPassword, username) => {
-    return result = await userModel.create({
-        email: email,
-        password: hashedPassword,
-        username: username
-    });
+    try {
+        return result = await userModel.create({
+            email: email,
+            password: hashedPassword,
+            username: username
+        });
+
+    } catch (error) {
+        console.log("Error : " + error)
+        throw error;
+    }
 
 }
 
 const generateToken = (user) => {
-    return jwt.sign({ email: user.email, id: user._id }, SECRET_KEY)
+    try {
+        return jwt.sign({ email: user.email, id: user._id }, SECRET_KEY)
+    } catch (error) {
+        console.log("Error : " + error)
+        throw error;
+    }
 
 }
 
 const comparePassword = async (currentPassword, dbPassword) => {
-    return await bcrypt.compare(currentPassword, dbPassword);
+    try {
+        return await bcrypt.compare(currentPassword, dbPassword);
+    } catch (error) {
+        console.log("Error : " + error)
+        throw error;
+    }
 }
 
 module.exports = {

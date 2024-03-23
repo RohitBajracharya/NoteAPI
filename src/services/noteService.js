@@ -1,7 +1,12 @@
 const noteModel = require("../models/note");
 
 const getNotesByUserId = async (userId) => {
-    return await noteModel.find({ userId: userId });
+    try {
+        return await noteModel.find({ userId: userId });
+    } catch (error) {
+        console.error("Error :", error);
+        throw error;
+    }
 }
 
 const saveNotes = async (title, description, userId) => {
@@ -10,7 +15,12 @@ const saveNotes = async (title, description, userId) => {
         description: description,
         userId: userId
     });
-    return await newNote.save();
+    try {
+        return await newNote.save();
+    } catch (error) {
+        console.log("Error : " + error);
+        throw error;
+    }
 
 }
 
@@ -20,11 +30,21 @@ const updateNoteById = async (title, description, userId, noteId) => {
         description: description,
         userId: userId,
     }
-    return await noteModel.findByIdAndUpdate(noteId, newNote, { new: true });
+    try {
+        return await noteModel.findByIdAndUpdate(noteId, newNote, { new: true });
+    } catch (error) {
+        console.log("Error: " + error);
+        throw error;
+    }
 }
 
 const deleteNoteById = async (noteId) => {
-    return await noteModel.findByIdAndDelete(noteId);
+    try {
+        return await noteModel.findByIdAndDelete(noteId);
+    } catch (error) {
+        console.log("Error: " + error);
+        throw error;
+    }
 }
 
 module.exports = {
